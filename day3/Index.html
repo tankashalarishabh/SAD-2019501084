@@ -20,21 +20,44 @@
                 display: table;
                 margin: 0 auto;
                 }
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                }
+            table, th, td {
+                width:50%;
+                border: 1px solid black;
+                border-collapse: collapse;
+                        }
         </style>
     </head>
     <body>
         <h1>
             My journey in MSIT
         </h1>
-        <div>
-            <img src="2019501084.jpg" align="left" style="width:128px;height:128px; border: 1px solid;">
-            <h2 align="center">Tankashala Rishabh</h2>
-            <h2 align="center"> 2019501084 </h2>
-        </div><br>
+        <h2 align="center">Tankashala Rishabh</h2>
+        <h2 align="center"> 2019501084 </h2>
+        <img src="2019501084.jpg" style="width:128px;height:128px; border: 1px solid;">
         <h2 class="h" >Some of the languages that we learnt</h2>
-        <ul style="list-style-type:circle;">
-            <li><a href="Python.html">Python</a><br></li>
-            <li><a href="Java.html">Java</a></li>
+        <table align="center">
+            <tr>
+              <th>Course</th>
+              <th>Mentor</th> 
+            </tr>
+            <tr>
+              <td><a href="Python.html">Python</a></td>
+              <td>Arun</td>
+            </tr>
+            <tr>
+              <td><a href="Java.html">Java</a></td>
+              <td>Praveen</td>
+            </tr>
+            <tr>
+              <td>ADS-1</td>
+              <td>Arun</td>
+            </tr>
+          </table>
         </ul>
     </body>
 </html>
