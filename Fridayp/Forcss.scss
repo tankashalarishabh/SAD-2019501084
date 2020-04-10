@@ -1,0 +1,88 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+}
+body {
+    background-color: rgb(63, 59, 59);
+}
+nav {
+    background-color: rgb(12, 12, 12);
+    height: 60px;
+    width: 100%;
+}
+label.logo {
+    color: rgb(199, 38, 65);
+    font-family: Helvetica;
+    font-size: 40px;
+    line-height: 60px;
+    padding: 0 80px;
+    font-weight: bold;
+}
+nav ul {
+    float: right;
+    margin-right: 20px;
+    list-style: none;
+}
+nav ul li {
+    display: inline-block;
+    line-height: 60px;
+    margin: 0 50px;
+    padding-top: 0%;
+}
+nav ul li a{
+    color: white;
+    font-size: 18px;
+}
+a:hover {
+    color: rgb(199, 38, 65);
+    transition: .5s;
+}
+
+.grid {
+    background-color: green;
+    display: grid;
+    padding: 20px;
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+    grid-template-columns: 200px 200px auto;
+}
+
+.grid-item {
+    background-color: white;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+}
+table.cat {
+    width: 100%;
+}
+
+.cat ol {
+    padding-left: 200px;
+}
+.cat tr th {
+    font-family: impact;
+    font-size: 40px;
+    color: rgb(184, 186, 187);
+}
+.cat ol li {
+    font-family: Georgia;
+    font-size: 20px;
+    padding-left: 0px;
+    /* color:; */
+}
+.container {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.container > div {
+    margin: 10px;
+    padding: 5px;
+}
+.container div img:hover {
+    width: 200px;
+    height: 200px;
+}
