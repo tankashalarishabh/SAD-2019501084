@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<style>
+  #titles{
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-family: sans-serif;
+    background-color: black;
+    width: 100%;
+}
+header{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+html{
+    background-color: black;
+}
+
+.btn-secondary{
+    margin-left: 5%;
+    width: 80px;
+    height: 40px;
+}
+.input-group{
+    margin-left:5%;
+}
+.form-control{
+    margin-right: 60%;
+    height: 20px;
+    width:250px;
+}
+.input-group-text{
+    font-family: sans-serif;
+    color: white;
+}
+form {
+    background-color: black;
+}
+@media(max-width: 1000px){
+
+    .form-control{
+        margin-right: 20%;
+        margin-left : 5%
+    }
+}
+div {
+    background-color: black;
+}
+</style>
+<html>
+    <header>
+        <head>
+            <title>Register</title>
+        </head>
+        
+        <body>
+            {% if message %}
+              <h2>{{message}} </h2>
+            {% endif %}
+
+        {% if name %}
+            <h2>{{name}} </h2>
+        {% endif %}
+          <h1 id=titles><u>Registration</u></h1>
+          <form action="{{url_for('register')}}" method="POST">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Email ID</span>
+              </div>
+              <input type="email" class="form-control" name="name" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" required>
+          </div>
+
+          <br>
+
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Password</span>
+              </div>
+              <input type="password" class="form-control" name="pwd" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" pattern=".{8,}" title="Eight or more characters" required>
+            </div>
+            <br>
+          <button type="submit" class="btn-secondary">submit</button>
+          <button type="submit" class="btn-secondary" formaction="/auth">Login</button>
+        </form>
+
+        </body>
+    </header>
+</html>
