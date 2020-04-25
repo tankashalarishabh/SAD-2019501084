@@ -1,3 +1,5 @@
+import csv
+import sys
 import os
 from flask import Flask, session,request,render_template,flash,logging,redirect,url_for
 from flask_session import Session
@@ -84,12 +86,20 @@ def auth():
         else:
             return "No account associated with this password"
 
-@app.route("/search",methods=["GET"])
+@app.route("/search",methods=["GET","POST"])
 def search():
-    if session["email"] == None:
-        return redirect(url_for("/logout"))
-    else:
-        return "Maintained successfully"
+    try:
+        inp = str(request.form.get("search"))
+        print("input is"+inp)
+        with open('books.csv', newline= "") as file:
+            readData = [row for row in csv.DictReader(file)]
+            for i in range(len(readData)):
+                if readData[i]['title'] == inp:
+                    return render_template("account.html",isbn=readData[i]['isbn'],title=readData[i]['title'],author=readData[i]['author'],year=readData[i]['year'])
+            return "Book not found"
+    except:
+        return sys.exc_info()[0]
+
 
 @app.route("/logout",methods=["GET","POST"])
 def logout():
