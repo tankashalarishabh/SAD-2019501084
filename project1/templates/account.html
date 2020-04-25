@@ -8,16 +8,16 @@
 </head>
 <body>
     <h2>You have successfully logged into this account</h2>
-    <h2>
-        {{isbn}},{{title}},{{author}},{{year}}
-    </h2>
-    <form action="{{url_for('search')}}" method="POST">
+    <form align="right" action="{{url_for('search')}}" method="POST">
         <input type = "text" name = "search" value = ""/>
         <button type="submit" class="src">search</button>
     </form>
-    <form action="{{url_for('logout')}}">
+    <form align="right" action="{{url_for('logout')}}">
         <button type="submit" class="btn btn-secondary btn-lg">Logout</button>
     </form>
-
+    <br>
+    <h2>
+        {{isbn}},{{title}},{{author}},{{year}}
+    </h2>
 </body>
 </html>
