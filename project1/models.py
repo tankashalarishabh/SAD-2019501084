@@ -12,3 +12,5 @@ class User(db.Model):
         self.email = email
         self.password=password
         self.time=dt.now()
+
+
