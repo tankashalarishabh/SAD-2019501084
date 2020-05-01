@@ -1,74 +1,62 @@
-<!DOCTYPE html>
-<style>
-  #titles{
-    text-align: center;
-    color: white;
-    font-size: 30px;
-    font-family: sans-serif;
-    background-color: black;
- 
-}
-header{
-    margin-left: 10%;
-    margin-right: 10%;
-}
-html{
-    background-color: black;
-}
-.btn-secondary{
-    margin-left: 5%;
-}
-.input-group{
-    margin-left:5%;
-}
-.form-control{
-    margin-right: 60%;
-}
-.input-group-text{
-    font-family: sans-serif;
-    color: white;
-}
-form {
-    background-color: black;
-}
-@media(max-width: 1000px){
+{% extends 'layout.html' %}
+{% block links %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+{% endblock %}
 
-    .form-control{
-        margin-right: 20%;
-        margin-left : 5%
-    }
-}
-</style>
-<html>
-    <header>
-        <link rel="stylesheet" href="Register.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <head>
-            <title>Login page</title>
-        </head>
-        {% if name %}
-              <h2>Hello {{name}}, please login </h2>
-            {% endif %}
-        <body>
-            <h1 id=titles><u>Login Page</u></h1>
 
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">Email ID</span>
-                </div>
-                <input type="mail" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+{% block body %}  
+    <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" >
+            <a class="navbar-brand">{{message}} {{username}}</a>
+            <form class="form-inline">
+              
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" formmethod="GET" formaction=" {{url_for ('logout'
+              )}}">Logout</button>
+            </form>
+          </nav>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <form class="card card-sm">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <i class="fas fa-search h4 text-body"></i>
+                        </div>
+                        
+                        <div class="col">
+                            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search books" name="book">
+                        </div>
+                        
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-success" type="submit" formmethod="POST" formaction = "{{url_for('search')}}">Search</button>
+                        </div>
+                        
+                    </div>
+                </form>
             </div>
-            <br>
-
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">Password</span>
+        </div>
+    </div>    
+    <h1>Search Results</h1>
+    {{ msg }}
+    
+    <div class="dropdown-divider"></div>
+    
+    <div class="container results-container">
+        
+        {% for book in books %}
+            <div class="card border-primary mb-3" style="width: 12rem">
+                <div class="card-body">
+                    <h4 class="card-title">Title->{{book['title']}}</h4>
+                    <h6 class="card-text">Author->{{book['author']}}</h6>
+                    <h6 class="card-text">Year->{{book['year']}}</h6>
+                    <h6 class="card-text">isbn->{{book['isbn']}}</h6>
                 </div>
-                <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
-              </div>
-              <br>
-            <button type="button" class="btn btn-secondary btn-lg">Login</button>
-            <br><br><br>
-        </body>
-    </header>
-</html>
+                <div class="card-footer">
+                    <a href="/bookpage/{{book['isbn']}}" class="card-link">Go to book details page</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>       
+           
+   
+{% endblock %}
