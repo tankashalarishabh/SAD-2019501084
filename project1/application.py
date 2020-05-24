@@ -6,6 +6,12 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime as dt
 from models import User,db
+import time
+from userReview import *
+from test import bookreview
+from sqlalchemy import create_engine,desc
+import json
+import requests
 
 
 app = Flask(__name__)
@@ -86,6 +92,7 @@ def auth():
         else:
             return "No account associated with this password"
 
+
 @app.route("/search",methods=["GET","POST"])
 def search():
     try:
@@ -94,11 +101,64 @@ def search():
         with open('books.csv', newline= "") as file:
             readData = [row for row in csv.DictReader(file)]
             for i in range(len(readData)):
-                if readData[i]['title'] == inp:
-                    return render_template("account.html",isbn=readData[i]['isbn'],title=readData[i]['title'],author=readData[i]['author'],year=readData[i]['year'])
+                if (readData[i]['title'] == inp) or (inp in readData[i]['title']):
+                    # lall = (readData[i]['title'].like(inp)).all()
+                    # print(lall)
+                    isbn = readData[i]['isbn']
+                    title = readData[i]['title']
+                    return render_template("account.html",isbn=isbn,title=title,author=readData[i]['author'],year=readData[i]['year'])
             return "Book not found"
     except:
         return sys.exc_info()[0]
+
+@app.route("/bookpage: <isbn>,<title>,<author>,<year>",methods=["POST","GET"])
+def bookpage(isbn,title,author,year):
+    print("this is title "+title)
+    book = bookreview(isbn,title,author,year)
+    res = requests.get("https://www.goodreads.com/book/review_counts.json",
+                       params={"key": "2VIV9mRWiAq0OuKcOPiA", "isbns": book.isbn})
+    data = res.text
+    parsed = json.loads(data)
+    print(parsed)
+    res = {}
+    for i in parsed:
+        for j in (parsed[i]):
+            res = j
+
+    # Variables for testing
+    bookisbn = book.isbn
+    usernam = "rishabh"
+
+    # Get all the reviews for the given book.
+    allreviews = review.query.filter_by(isbn=bookisbn).all()
+    if request.method == "POST":
+        rating = request.form.get("rating")
+        reviews = request.form.get("review")
+        isbn = book.isbn
+        timestamp = time.ctime(time.time())
+        title = book.title
+        username = "rishabh"
+        user = review(isbn=isbn, review=reviews, rating=rating,
+                      time_stamp=timestamp, title=title, username=username)
+        db.session.add(user)
+        db.session.commit()
+
+
+        # Get all the reviews for the given book.
+        allreviews = review.query.filter_by(isbn=book.isbn).all()
+        return render_template("review.html", res=res, book=book, review=allreviews, property="none", message="You reviewed this book!!")
+    else:
+        # database query to check if the user had given review to that paticular book.
+        rev = review.query.filter(
+            review.isbn == bookisbn, review.username == usernam).first()
+
+        # print(rev)
+
+        # if review was not given then dispaly the book page with review button
+        if rev is None:
+            return render_template("review.html", book=book, review=allreviews, res=res,isbn=isbn,title=title,author=author,year=year)
+        else:
+            return render_template("review.html", book=book, message="You reviewed this book!!", review=allreviews, res=res, property="none")
 
 
 @app.route("/logout",methods=["GET","POST"])
